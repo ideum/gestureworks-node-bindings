@@ -28,6 +28,10 @@ gestureworks.resize = function(options) {
   gwcore.resizeScreen(xScale, yScale);
 }
 
+gestureworks.serve = function (server) {
+  require('./socket').init(server);
+}
+
 gestureworks.on('touch', function (touchEvent) {
   switch (touchEvent.type) { // match against touchStatus enum
     case 'touchstart': touchEvent.status = 1; break;

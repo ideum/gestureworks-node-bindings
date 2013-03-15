@@ -17,6 +17,7 @@
   "dependencies": {
     "bindings": "~1.1.0",
     "coffee-script": "~1.6.1",
-    "semver": "~1.1.4"
+    "semver": "~1.1.4",
+    "socket.io": "~0.9.13"
   }
 }
