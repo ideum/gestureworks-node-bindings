@@ -1,6 +1,6 @@
 {
-  "name": "gestureworks-node-bindings",
-  "version": "0.0.0",
+  "name": "gestureworks",
+  "version": "0.1.0",
   "description": "Gestureworks Node Bindings",
   "main": "index.js",
   "scripts": {
@@ -8,16 +8,15 @@
   },
   "repository": "",
   "author": "Ben Cates <ben@ideum.com>",
-  "license": "Commercial",
+  "license": "MIT",
   "devDependencies": {
+    "coffee-script": "~1.6.1",
     "node-gyp": "~0.8.5",
     "chai": "~1.5.0",
     "mocha": "~1.8.1"
   },
   "dependencies": {
     "bindings": "~1.1.0",
-    "coffee-script": "~1.6.1",
-    "semver": "~1.1.4",
     "socket.io": "~0.9.13"
   }
 }
