@@ -1,46 +1,47 @@
-var gestureworks =  require('./index');
+var childProcess = require('child_process');
 
 exports.init = function (server) {
   var io = require('socket.io').listen(server);
+  var initData = Array.prototype.slice.call(arguments, 1);
 
   io.sockets.on('connection', function (socket) {
-    var touchObjects = [];
+    var child = childProcess.fork(__dirname + '/child.js');
+    child.send({ method: 'init', arguments: initData });
 
     socket.on('disconnect', function () {
-      touchObjects.forEach(function(name) {
-        gestureworks.deregisterTouchObject(name);
-      });
-      touchObjects = [];
+      child.disconnect();
     });
 
-    socket.on('resizeWindow', function (data) {
-      gestureworks.resize(data);
+    socket.on('resizeScreen', function (x, y) {
+      child.send({ method: 'resizeScreen', arguments: [x, y] });
     });
 
     socket.on('touchevent', function (data) {
-      gestureworks.emit('touch', data);
+      child.send({ event: 'touch', data: data });
     });
 
     socket.on('registerTouchObject', function (name) {
-      touchObjects.push(name);
-      gestureworks.registerTouchObject(name);
+      child.send({ method: 'registerTouchObject', arguments: [name] });
     });
 
     socket.on('assignTouchPoint', function (name, pointId) {
-      gestureworks.assignTouchPoint(name, pointId);
+      child.send({ method: 'assignTouchPoint', arguments: [name, pointId] });
     });
 
     socket.on('addGesture', function (target, gesture) {
-      gestureworks.addGesture(target, gesture);
+      child.send({ method: 'addGesture', arguments: [target, gesture] });
     });
 
-    gestureworks.on('point', function (data) {
-      socket.emit('point', data);
-      socket.emit('point' + data.status, data);
-    });
-
-    gestureworks.on('gesture', function (data) {
-      socket.emit('gesture', data);
+    child.on('message', function(m) {
+      switch (m.type) {
+      case 'point':
+        socket.emit('point', m.data);
+        socket.emit('point' + m.data.status, m.data);
+        break;
+      case 'gesture':
+        socket.emit('gesture', m.data);
+        break;
+      }
     });
   });
 }

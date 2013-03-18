@@ -22,15 +22,13 @@ gestureworks.init = function(dllPath, gmlPath, x, y) {
   eventLoop();
 };
 
-gestureworks.resize = function(options) {
-  if (options.width) xScale = parseInt(options.width, 10);
-  if (options.height) yScale = parseInt(options.height, 10);
+gestureworks.resizeScreen = function(x, y) {
+  xScale = x;
+  yScale = y;
   gwcore.resizeScreen(xScale, yScale);
 }
 
-gestureworks.serve = function (server) {
-  require('./socket').init(server);
-}
+gestureworks.serve = require('./socket').init;
 
 gestureworks.on('touch', function (touchEvent) {
   switch (touchEvent.type) { // match against touchStatus enum
