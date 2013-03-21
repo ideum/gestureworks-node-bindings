@@ -2,6 +2,7 @@ var childProcess = require('child_process');
 
 exports.init = function (server) {
   var io = require('socket.io').listen(server);
+  io.set('transports', ['websocket', 'flashsocket']);
   var initData = Array.prototype.slice.call(arguments, 1);
 
   io.sockets.on('connection', function (socket) {

@@ -32,9 +32,18 @@ gestureworks.serve = require('./socket').init;
 
 gestureworks.on('touch', function (touchEvent) {
   switch (touchEvent.type) { // match against touchStatus enum
-    case 'touchstart': touchEvent.status = 1; break;
-    case 'touchmove':  touchEvent.status = 0; break;
-    case 'touchend':   touchEvent.status = 2; break;
+    case 'touchstart':
+    case 'touchBegin':
+      touchEvent.status = 1;
+      break;
+    case 'touchmove':
+    case 'touchMove':
+      touchEvent.status = 0;
+      break;
+    case 'touchend':
+    case 'touchEnd':
+      touchEvent.status = 2;
+      break;
   }
 
   touchEvent.id = touchEvent.identifier;
