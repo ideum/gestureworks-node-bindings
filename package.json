@@ -1,12 +1,15 @@
 {
   "name": "gestureworks",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Gestureworks Node Bindings",
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script test"
   },
-  "repository": "",
+  "repository": {
+    "type" : "git",
+    "url" : "http://github.com/ideum/gestureworks-node-bindings.git"
+  },
   "author": "Ben Cates <ben@ideum.com>",
   "license": "MIT",
   "devDependencies": {

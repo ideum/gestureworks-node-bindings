@@ -2,6 +2,10 @@ expect = require('chai').expect
 gwcore = require('bindings')('gestureworks.node')
 
 dll = require('path').resolve('tmp/GestureworksCore32.dll')
+unless require('fs').existsSync(dll)
+  console.error("You must place the GestureworksCore32.dll file into ./tmp for the tests to run")
+  process.exit(1)
+
 gwcore.loadGestureWorks(dll)
 gwcore.initializeGestureWorks(1,1)
 

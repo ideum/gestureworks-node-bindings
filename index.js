@@ -15,8 +15,8 @@ gestureworks.init = function(dllPath, gmlPath, x, y) {
   success = gwcore.loadGML(path.resolve(gmlPath));
   if (!success) throw "GML could not be loaded";
 
-  xScale = x;
-  yScale = y;
+  xScale = x || 1;
+  yScale = y || 1;
   gwcore.initializeGestureWorks(xScale, yScale);
 
   eventLoop();
