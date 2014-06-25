@@ -5,6 +5,8 @@ var gestureworks = module.exports = new EventEmitter();
 
 var xScale, yScale;
 
+var pointHasArrived = false;
+
 gestureworks.init = function(dllPath, gmlPath, x, y) {
   var path = require('path');
   var success;
@@ -51,12 +53,17 @@ gestureworks.on('touch', function (touchEvent) {
   touchEvent.x /= xScale;
   touchEvent.y /= yScale;
 
+  pointHasArrived = true;
   gwcore.addEvent(touchEvent);
 });
 
 function eventLoop () {
   // run the loop at ~120Hz
   setTimeout(eventLoop, (1000 / 120));
+
+  // only process a frame if data has been received
+  if (!pointHasArrived) return;
+  pointHasArrived = false;
 
   gwcore.processFrame();
 
